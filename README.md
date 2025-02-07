@@ -23,4 +23,4 @@ A modern React application for managing and organizing different types of conten
 - **Package Manager**: npm/yarn
 
 ## 🏗️ Screenshots!
-![alt text](<Screenshot (157).png>)
+![alt text](<Screenshot.png>)
