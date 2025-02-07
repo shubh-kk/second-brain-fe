@@ -1,0 +1,15 @@
+@import "tailwindcss" ;
+
+@theme {
+    --color-customPurple-primary-400: #a78bfa; 
+    --color-customPurple-primary-500: #6d28d9; 
+    --color-customPurple-primary-600: #4c1d95; 
+    
+    --color-customPurple-secondary-400: #c4b5e4; 
+    --color-customPurple-secondary-500: #a855f7; 
+    --color-customPurple-secondary-600: #9333ea; 
+
+    --color-customGray-primary-100: #eeeeef;
+    --color-customGray-primary-200: #e6e9ed;
+    --color-customGray-primary-600: #95989c;
+}
