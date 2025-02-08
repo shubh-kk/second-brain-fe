@@ -10,9 +10,9 @@ A modern React application for managing and organizing different types of conten
 - **Content Types Support**:
   - YouTube videos (with embedded player)
   - Twitter posts (with embedded tweets)
-  - Documents
-  - Links
-  - Custom tags
+  - **Comming soon** :  
+  - [ Documents, Links, Custom tags ]
+  - [ Share your brain/link ]
 
 ## 🛠️ Tech Stack
 
@@ -20,7 +20,10 @@ A modern React application for managing and organizing different types of conten
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Build Tool**: Vite
-- **Package Manager**: npm/yarn
+- **Package Manager**: npm
 
 ## 🏗️ Screenshots!
-![alt text](<Screenshot.png>)
+### Dashboard
+![alt text](<./screenshots/Screenshot.png>)
+### Add Content
+![alt text](<./screenshots/add_content.png>)
