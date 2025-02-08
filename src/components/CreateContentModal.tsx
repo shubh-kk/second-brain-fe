@@ -29,6 +29,7 @@ export default function CreateContentModal({ open, onClose }: { open: boolean; o
     const modalRef = useOutsideClick(onClose);
     const titleRef = useRef<HTMLInputElement>();
     const linkRef = useRef<HTMLInputElement>();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     enum ContentType {
         Youtube = "youtube",
@@ -38,6 +39,7 @@ export default function CreateContentModal({ open, onClose }: { open: boolean; o
 
     async function createContent() {
         try {
+            setIsSubmitting(true);
             const title = titleRef.current?.value;
             const link = linkRef.current?.value;
 
@@ -60,11 +62,11 @@ export default function CreateContentModal({ open, onClose }: { open: boolean; o
                 alert("Content added successfully!");
                 onClose(); // Close modal after successful addition
             }
-
-
         } catch (error: any) {
             console.error("Content creation error:", error);
             alert(error.response?.data?.msg || "Failed to create content. Please try again.");
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
@@ -131,12 +133,17 @@ export default function CreateContentModal({ open, onClose }: { open: boolean; o
                             <div className="mt-4">
                                 <Input placeHolder="Enter category"/>
                             </div>
-
+                            
                             <div className="flex justify-end mt-6">
                                 <Button 
                                     text="Submit" 
                                     variant="primary" 
                                     onClick={createContent}
+                                    loading={isSubmitting}
+                                    startIcon={isSubmitting ? (
+                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"/>
+                                    ) : undefined}
+                                    disabled={isSubmitting}
                                 />
                             </div>
                         </div>

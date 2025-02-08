@@ -22,6 +22,23 @@ A modern React application for managing and organizing different types of conten
 - **Build Tool**: Vite
 - **Package Manager**: npm
 
+## Installation
+To get started with this project, clone the repository and install the dependencies using npm:
+
+```bash
+git clone https://github.com/shubh-kk/second-brain-fe.git
+npm install
+```
+
+## Usage
+To run the project, use the following npm script:
+
+```bash
+npm run dev
+```
+
+This will compile the TypeScript code and start the application.
+
 ## 🏗️ Screenshots!
 ### Dashboard
 ![alt text](<./screenshots/Screenshot.png>)
