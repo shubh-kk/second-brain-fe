@@ -9,7 +9,6 @@ interface ButtonProps{
     onClick?: () => void ;
     fullWidth?: boolean;
     loading?: boolean;
-
 }
 const variantStyles = {
     "primary": "bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm hover:shadow-md transition-all duration-200",
@@ -19,7 +18,7 @@ const variantStyles = {
 const defaultStyles = "px-4 py-2 rounded-lg font-medium items-center text-sm"
 export const Button =  ({variant, onClick, text, startIcon, fullWidth, loading}: ButtonProps) => {
     return <>
-        <button onClick={onClick} className={`${variantStyles[variant]} ${defaultStyles} flex`}>
+        <button onClick={onClick} className={`${variantStyles[variant]} ${defaultStyles} flex ${fullWidth? " w-full flex justify-center items-center" : ""} ${loading ? " opacity-45": ""} `} disabled={loading} >
            <div className="pr-2"> {startIcon}</div> {text}
         </button>
     </>
