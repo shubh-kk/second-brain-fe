@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BrainIcon } from './icons/BrainIcon';
-import { TwitterIcon, DocumentIcon, LinkIcon, HashtagIcon, Youtube, Documents } from './icons/Icons';
+import { TwitterIcon, LinkIcon, HashtagIcon, Youtube, Documents } from './icons/Icons';
 import { MenuIcon } from './icons/MenuIcon';
 
 export function SideBar() {
