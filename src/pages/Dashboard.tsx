@@ -45,10 +45,8 @@ function Dashboard() {
 
   return (
     <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-      <div className='flex'>
-        <SideBar />
-      </div>
-      <div className='ml-72 p-6 flex flex-col gap-4'>
+      <SideBar />
+      <div className="md:ml-72 p-6 flex flex-col gap-4">
         <CreateContentModal 
           open={modalOpen} 
           onClose={() => setModalOpen(false)} 
@@ -70,7 +68,7 @@ function Dashboard() {
             disabled={isSharing}
           />
         </div>
-        <div className='flex flex-wrap grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
           {contents.map(({ title, link, type, _id }) => (
             <Card
               key={_id}

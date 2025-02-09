@@ -1,26 +1,55 @@
+import { useState } from 'react';
 import { BrainIcon } from './icons/BrainIcon';
 import { TwitterIcon, DocumentIcon, LinkIcon, HashtagIcon, Youtube, Documents } from './icons/Icons';
+import { MenuIcon } from './icons/MenuIcon';
 
-export const SideBar = () => {
+export function SideBar() {
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
-        <div className="h-screen bg-white border-r border-gray-100 w-72 fixed left-0 top-0 p-4">
-            {/* Logo Section */}
-            <div className="flex items-center gap-3 mb-8">
-                <div className="w-8 h-8 text-purple-500">
-                    <BrainIcon/>
-                </div>
-                <span className="text-2xl font-semibold text-gray-900">Second Brain</span>
-            </div>
+        <>
+            {/* Mobile Toggle Button */}
+            <button 
+                onClick={() => setIsOpen(!isOpen)}
+                className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-md hover:bg-gray-50"
+            >
+                <MenuIcon />
+            </button>
 
-            {/* Navigation Links */}
-            <nav className="space-y-2">
-                <NavItem icon={<TwitterIcon />} text="Tweets" />
-                <NavItem icon={<Youtube />} text="Videos" />
-                <NavItem icon={<Documents />} text="Documents" />
-                <NavItem icon={<LinkIcon />} text="Links" />
-                <NavItem icon={<HashtagIcon />} text="Tags" />
-            </nav>
-        </div>
+            {/* Overlay for mobile */}
+            {isOpen && (
+                <div 
+                    className="md:hidden fixed inset-0 bg-gray-600 bg-opacity-50 z-40"
+                    onClick={() => setIsOpen(false)}
+                />
+            )}
+
+            {/* Sidebar */}
+            <div className={`
+                fixed top-0 left-0 h-full w-72 bg-white shadow-lg z-40
+                transform transition-transform duration-300 ease-in-out
+                ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
+                md:translate-x-0
+            `}>
+                <div className="p-6">
+                    <div className="flex items-center gap-3 mb-8">
+                        <div className="w-8 h-8 text-purple-500">
+                            <BrainIcon/>
+                        </div>
+                        <span className="text-2xl font-semibold text-gray-900">Second Brain</span>
+                    </div>
+
+                    {/* Navigation Links */}
+                    <nav className="space-y-2">
+                        <NavItem icon={<TwitterIcon />} text="Tweets" />
+                        <NavItem icon={<Youtube />} text="Videos" />
+                        <NavItem icon={<Documents />} text="Documents" />
+                        <NavItem icon={<LinkIcon />} text="Links" />
+                        <NavItem icon={<HashtagIcon />} text="Tags" />
+                    </nav>
+                </div>
+            </div>
+        </>
     );
 };
 
