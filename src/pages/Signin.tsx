@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 export function Signin() {
     const usernameRef = useRef<HTMLInputElement>();
     const passwordRef = useRef<HTMLInputElement>();
-    const navigate = useNavigate() ;
+    const navigate = useNavigate();
 
     async function signin() {
         try {
@@ -29,6 +29,7 @@ export function Signin() {
     }
     return <div className="h-screen w-screen bg-gray-200 flex justify-center items-center">
         <div className="bg-white rounded min-w-40 border p-4">
+            <h1 className="flex justify-center font-semibold text-xl ">Signin</h1>
             <Input reference={usernameRef} placeHolder="Username" />
             <Input reference={passwordRef} placeHolder="Password" />
             <div className="flex justify-center pt-4 ">

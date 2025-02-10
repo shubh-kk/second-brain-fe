@@ -5,46 +5,49 @@ import { CrossIcon } from "./icons/CrossIcon";
 import { useEffect, useRef, useState } from "react";
 import { BACKEND_URL } from "../config";
 
-// Add useOutsideClick hook
+// Hook to detect clicks outside the modal
 function useOutsideClick(callback: () => void) {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (ref.current && !ref.current.contains(event.target as Node)) {
-                callback();
+                callback(); // Call the callback if clicked outside
             }
         }
 
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside); // Cleanup event listener
         };
     }, [callback]);
 
     return ref;
 }
 
+// Modal component for creating new content
 export default function CreateContentModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-    const modalRef = useOutsideClick(onClose);
-    const titleRef = useRef<HTMLInputElement>();
-    const linkRef = useRef<HTMLInputElement>();
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const modalRef = useOutsideClick(onClose); // Reference for outside click detection
+    const titleRef = useRef<HTMLInputElement>(); // Reference for title input
+    const linkRef = useRef<HTMLInputElement>(); // Reference for link input
+    const [isSubmitting, setIsSubmitting] = useState(false); // State to manage submission status
 
+    // Enum for content types
     enum ContentType {
         Youtube = "youtube",
         Twitter = "twitter"
     }
-    const [type, setType] = useState(ContentType.Youtube);
+    const [type, setType] = useState(ContentType.Youtube); // State for selected content type
 
+    // Function to create new content
     async function createContent() {
         try {
-            setIsSubmitting(true);
-            const title = titleRef.current?.value;
-            const link = linkRef.current?.value;
+            setIsSubmitting(true); // Set submitting state to true
+            const title = titleRef.current?.value; // Get title value
+            const link = linkRef.current?.value; // Get link value
 
             if (!title || !link) {
-                alert("Please fill in all fields");
+                alert("Please fill in all fields"); // Alert if fields are empty
                 return;
             }
             
@@ -54,19 +57,19 @@ export default function CreateContentModal({ open, onClose }: { open: boolean; o
                 type
             }, {
                 headers: {
-                    "Authorization": `${localStorage.getItem("token")}`
+                    "Authorization": `${localStorage.getItem("token")}` // Include token in headers
                 }
             });
 
             if (response.status === 201) {
-                alert("Content added successfully!");
+                alert("Content added successfully!"); // Notify user on success
                 onClose(); // Close modal after successful addition
             }
         } catch (error: any) {
             console.error("Content creation error:", error);
-            alert(error.response?.data?.msg || "Failed to create content. Please try again.");
+            alert(error.response?.data?.msg || "Failed to create content. Please try again."); // Handle error
         } finally {
-            setIsSubmitting(false);
+            setIsSubmitting(false); // Reset submitting state
         }
     }
 
@@ -100,7 +103,7 @@ export default function CreateContentModal({ open, onClose }: { open: boolean; o
                                             ? 'border-blue-500 bg-blue-50' 
                                             : 'border-gray-200 hover:border-gray-300'
                                         }`}
-                                        onClick={() => setType(ContentType.Youtube)}
+                                        onClick={() => setType(ContentType.Youtube)} // Set content type to YouTube
                                     >
                                         <input 
                                             type="radio" 
@@ -117,7 +120,7 @@ export default function CreateContentModal({ open, onClose }: { open: boolean; o
                                             ? 'border-blue-500 bg-blue-50' 
                                             : 'border-gray-200 hover:border-gray-300'
                                         }`}
-                                        onClick={() => setType(ContentType.Twitter)}
+                                        onClick={() => setType(ContentType.Twitter)} // Set content type to Twitter
                                     >
                                         <input 
                                             type="radio" 
@@ -138,12 +141,12 @@ export default function CreateContentModal({ open, onClose }: { open: boolean; o
                                 <Button 
                                     text="Submit" 
                                     variant="primary" 
-                                    onClick={createContent}
+                                    onClick={createContent} // Call create content function on button click
                                     loading={isSubmitting}
                                     startIcon={isSubmitting ? (
                                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"/>
                                     ) : undefined}
-                                    disabled={isSubmitting}
+                                    disabled={isSubmitting} // Disable button while submitting
                                 />
                             </div>
                         </div>

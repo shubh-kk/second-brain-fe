@@ -3,12 +3,13 @@ import { BrainIcon } from './icons/BrainIcon';
 import { TwitterIcon, LinkIcon, HashtagIcon, Youtube, Documents } from './icons/Icons';
 import { MenuIcon } from './icons/MenuIcon';
 
+// Sidebar component for navigation
 export function SideBar() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false); // State to manage sidebar visibility
 
     return (
         <>
-            {/* Mobile Toggle Button */}
+            {/* Mobile Toggle Button to open/close sidebar */}
             <button 
                 onClick={() => setIsOpen(!isOpen)}
                 className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-md hover:bg-gray-50"
@@ -16,20 +17,20 @@ export function SideBar() {
                 <MenuIcon />
             </button>
 
-            {/* Overlay for mobile */}
+            {/* Overlay for mobile when sidebar is open */}
             {isOpen && (
                 <div 
-                    className="md:hidden fixed inset-0 bg-gray-600 bg-opacity-50 z-40"
-                    onClick={() => setIsOpen(false)}
+                    className="md:hidden fixed inset-0 bg-gray-200 bg-opacity-50 z-40"
+                    onClick={() => setIsOpen(false)} // Close sidebar on overlay click
                 />
             )}
 
-            {/* Sidebar */}
-            <div className={`
+            {/* Sidebar container */}
+            <div className={` 
                 fixed top-0 left-0 h-full w-72 bg-white shadow-lg z-40
                 transform transition-transform duration-300 ease-in-out
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-                md:translate-x-0
+                md:translate-x-0 // Always visible on medium and larger screens
             `}>
                 <div className="p-6">
                     <div className="flex items-center gap-3 mb-8">
@@ -53,11 +54,13 @@ export function SideBar() {
     );
 };
 
+// Props for navigation items
 interface NavItemProps {
     icon: React.ReactNode;
     text: string;
 }
 
+// Navigation item component
 const NavItem = ({ icon, text }: NavItemProps) => {
     return (
         <a 

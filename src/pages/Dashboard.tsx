@@ -11,61 +11,64 @@ import { SideBar } from '../components/SideBar'
 import { useContent } from "../hooks/UseContent"
 import { BACKEND_URL } from "../config"
 
+// Dashboard component for displaying and managing content
 function Dashboard() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [isSharing, setIsSharing] = useState(false);
-  const { contents, refresh } = useContent();
+  const [modalOpen, setModalOpen] = useState(false); // State to manage modal visibility
+  const [isSharing, setIsSharing] = useState(false); // State to manage sharing status
+  const { contents, refresh } = useContent(); // Custom hook to fetch content
 
+  // Function to handle sharing content
   const handleShare = async () => {
     try {
-      setIsSharing(true);
+      setIsSharing(true); // Set sharing state to true
       const response = await axios.post(`${BACKEND_URL}/api/v1/brain/share`, 
         { share: true },
         {
           headers: {
-            "Authorization": localStorage.getItem("token")
+            "Authorization": localStorage.getItem("token") // Include token in headers
           }
         }
       );
 
-      const shareUrl = `http://localhost:5173/share/${response.data.link}`;
-      await copy(shareUrl);
-      alert('Share link copied to clipboard!');
+      const shareUrl = `http://localhost:5173/share/${response.data.link}`; // Construct share URL
+      await copy(shareUrl); // Copy share URL to clipboard
+      alert('Share link copied to clipboard!'); // Notify user
     } catch (error: any) {
       console.error('Share error:', error);
-      alert(error.response?.data?.msg || 'Failed to generate share link');
-    }finally {
-      setIsSharing(false);
+      alert(error.response?.data?.msg || 'Failed to generate share link'); // Handle error
+    } finally {
+      setIsSharing(false); // Reset sharing state
     }
   };
-  // when modal closes, refresh the contents
+
+  // Refresh contents when modal closes
   useEffect(() => {
     refresh();
   }, [modalOpen]);
 
   return (
     <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-      <SideBar />
+      <SideBar /> {/* Sidebar for navigation */}
       <div className="md:ml-72 p-6 flex flex-col gap-4">
         <CreateContentModal 
           open={modalOpen} 
-          onClose={() => setModalOpen(false)} 
+          onClose={() => setModalOpen(false)} // Close modal on button click
         />
         <div className="flex justify-end gap-3 mb-4 w-full">
           <Button 
             text='Add Content' 
-            onClick={() => setModalOpen(true)} 
+            onClick={() => setModalOpen(true)} // Open modal on button click
             variant="primary" 
             startIcon={<PlusIcon />} 
           />
           <Button
-            text={isSharing ? '' : 'Share'}
+            text={isSharing ? '' : 'Share'} // Change button text based on sharing state
             onClick={handleShare}
             variant="secondary"
             startIcon={isSharing ? (
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
             ) : <ShareIcon />}
-            disabled={isSharing}
+            disabled={isSharing} // Disable button while sharing
           />
         </div>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
@@ -76,7 +79,7 @@ function Dashboard() {
               title={title}
               link={link}
               contentId={_id}
-              onDelete={refresh}
+              onDelete={refresh} // Refresh contents after deletion
             />
           ))}
         </div>

@@ -4,32 +4,35 @@ import { BACKEND_URL } from '../config';
 import { CrossIcon } from "./icons/CrossIcon"
 import { ShareIcon } from "./icons/ShareIcon"
 
+// Props for the Card component
 interface CardProps {
     title: string,
     link: string,
     type: "youtube" | "twitter",
     contentId: string,
-    onDelete: () => void
+    onDelete: () => void // Callback to refresh content after deletion
 }
 
+// Card component for displaying content
 export const Card = ({ title, link, type, contentId, onDelete }: CardProps) => {
-    const [isDeleting, setIsDeleting] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false); // State to manage deletion status
 
+    // Function to handle content deletion
     const handleDelete = async () => {
         try {
-            setIsDeleting(true);
+            setIsDeleting(true); // Set deleting state to true
             await axios.delete(`${BACKEND_URL}/api/v1/content`, {
-                data: { contentId },
+                data: { contentId }, // Send content ID to delete
                 headers: {
-                    "Authorization": localStorage.getItem("token")
+                    "Authorization": localStorage.getItem("token") // Include token in headers
                 }
             });
-            onDelete();
+            onDelete(); // Refresh content after deletion
         } catch (error: any) {
             console.error('Delete error:', error);
-            alert(error.response?.data?.msg || 'Failed to delete content');
+            alert(error.response?.data?.msg || 'Failed to delete content'); // Handle error
         } finally {
-            setIsDeleting(false);
+            setIsDeleting(false); // Reset deleting state
         }
     };
 
@@ -48,8 +51,8 @@ export const Card = ({ title, link, type, contentId, onDelete }: CardProps) => {
                         <ShareIcon />
                     </a>
                     <button 
-                        onClick={handleDelete}
-                        disabled={isDeleting}
+                        onClick={handleDelete} // Call delete function on button click
+                        disabled={isDeleting} // Disable button while deleting
                         className="text-gray-400 transition-colors duration-200 ease-out hover:text-indigo-500"
                     >
                         {isDeleting ? (

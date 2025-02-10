@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 
+// Me component to check user authentication
 export function Me() {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Hook to programmatically navigate
     
     useEffect(() => {
         const checkAuth = async () => {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("token"); // Get token from local storage
             
             if (!token) {
-                navigate("/signup");
+                navigate("/signup"); // Redirect to signup if no token
                 return;
             }
 
@@ -19,17 +20,17 @@ export function Me() {
                 // Verify token with backend
                 await axios.get(`${BACKEND_URL}/api/v1/me`, {
                     headers: {
-                        "Authorization": token
+                        "Authorization": token // Include token in headers
                     }
                 });
-                navigate("/dashboard");
+                navigate("/dashboard"); // Redirect to dashboard if token is valid
             } catch (error) {
-                localStorage.removeItem("token");
-                navigate("/signup");
+                localStorage.removeItem("token"); // Remove token if verification fails
+                navigate("/signup"); // Redirect to signup
             }
         };
 
-        checkAuth();
+        checkAuth(); // Call authentication check
     }, [navigate]);
 
     return (
